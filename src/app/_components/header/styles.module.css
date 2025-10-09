@@ -1,0 +1,5 @@
+@reference "#tailwind.css";
+
+.header {
+    @apply flex items-center pt-6 max-h-24 flex-auto flex-col mb-3;
+}

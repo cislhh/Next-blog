@@ -1,0 +1,5 @@
+@reference "#tailwind.css";
+
+.tools {
+    @apply flex justify-between my-5 w-full max-h-12;
+}

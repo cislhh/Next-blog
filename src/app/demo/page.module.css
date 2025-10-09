@@ -1,0 +1,9 @@
+@reference "#tailwind.css";
+
+.demo {
+    @apply flex flex-auto flex-wrap items-center justify-center;
+
+    & > .container {
+        @apply bg-neutral-100/40 shadow-black/20  backdrop-blur-sm shadow-md rounded-md p-5 m-5 min-w-[20rem];
+    }
+}

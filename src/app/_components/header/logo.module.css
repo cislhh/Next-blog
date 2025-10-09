@@ -1,0 +1,16 @@
+@reference "#tailwind.css";
+
+.link {
+    @apply w-20 h-20 block  rounded-full  shadow-nymd p-1 bg-white;
+    transition-duration: 300ms;
+    animation: breathe-light 4s ease-in-out infinite;
+
+    &:hover {
+        @apply shadow-nylg shadow-amber-400;
+        transform: scale(1.2) rotate(360deg);
+    }
+
+    & > img {
+        @apply rounded-full;
+    }
+}
