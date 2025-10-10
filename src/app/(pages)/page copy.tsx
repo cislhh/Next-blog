@@ -1,18 +1,23 @@
 import type { FC } from 'react';
-import { IPaginateQueryProps } from '../_components/paginate/types';
+
 import { isNil } from 'lodash';
-import { queryPostPaginate } from '../actions/post';
-import { redirect } from 'next/navigation';
-import { Tools } from '../_components/home/tools';
-import { cn } from '../_components/shadcn/utils';
-import $styles from './page.module.css'
+import { Calendar } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Calendar } from 'lucide-react';
+import { redirect } from 'next/navigation';
 
-const HomePage: FC<{ searchParams: IPaginateQueryProps }> = async ({ searchParams }) => {
-    const { page: currentPage, limit = 8 } = searchParams;
+import type { IPaginateQueryProps } from '../_components/paginate/types';
 
+import { Tools } from '../_components/home/tools';
+import { PostActions } from '../_components/post/list';
+import { PostListPaginate } from '../_components/post/paginate';
+import { cn } from '../_components/shadcn/utils';
+import { queryPostPaginate } from '../actions/post';
+import $styles from './page.module.css';
+
+const HomePage: FC<{ searchParams: Promise<IPaginateQueryProps> }> = async ({ searchParams }) => {
+    const { page: currentPage, limit = 8 } = await searchParams;
+    // 当没有传入当前页或当前页小于1时，设置为第1页
     const page = isNil(currentPage) || Number(currentPage) < 1 ? 1 : Number(currentPage);
 
     const { items, meta } = await queryPostPaginate({ page: Number(page), limit });
@@ -20,10 +25,11 @@ const HomePage: FC<{ searchParams: IPaginateQueryProps }> = async ({ searchParam
     if (meta.totalPages && meta.totalPages > 0 && page > meta.totalPages) {
         return redirect('/');
     }
+
     return (
         <div className="page-item">
             <Tools className="page-container" />
-             <div className={cn('page-container', $styles.list)}>
+            <div className={cn('page-container', $styles.list)}>
                 {items.map((item) => (
                     <div
                         className={$styles.item}
@@ -59,12 +65,12 @@ const HomePage: FC<{ searchParams: IPaginateQueryProps }> = async ({ searchParam
                                     </span>
                                     <time className="ellips">2024年8月10日</time>
                                 </div>
-                                {/* 文章操作按钮 */}
+                                <PostActions id={item.id} />
                             </div>
                         </div>
                     </div>
                 ))}
-                {/* 分页组件 */}
+                {meta.totalPages! > 1 && <PostListPaginate limit={8} page={page} />}
             </div>
         </div>
     );

@@ -1,3 +1,4 @@
+'use client'
 import type { FC, MouseEventHandler } from 'react';
 import { Undo2 } from 'lucide-react';
 import { Button } from '../shadcn/ui/button';
@@ -31,7 +32,6 @@ export const BackButton: FC = () => {
             cn('rounded-sm',{'pointer-events-auto opacity-50':historyLength<=1})
         } onClick={goBack}>
             <Undo2 />
-            {historyLength}
             返回
         </Button>
     );
