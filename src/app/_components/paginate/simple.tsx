@@ -33,6 +33,7 @@ export const Pagination: FC<{ totalPages: number; currentPage: number }> = ({
     useEffect(() => {
         // 在当前页面小于等于1时，删除URL中的页面查询参数
         const params = new URLSearchParams(searchParams);
+        console.log(params,'data----params');
         if (currentPage <= 1) params.delete('page');
         router.replace(pathname + (params.toString() ? `?${params.toString()}` : ''));
     }, [currentPage]);

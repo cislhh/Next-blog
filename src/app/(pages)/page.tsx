@@ -9,6 +9,7 @@ import $styles from './page.module.css'
 import Image from 'next/image';
 import Link from 'next/link';
 import { Calendar } from 'lucide-react';
+import { PostListPaginate } from '../_components/post/paginate';
 
 const HomePage: FC<{ searchParams: IPaginateQueryProps }> = async ({ searchParams }) => {
     const { page: currentPage, limit = 8 } = searchParams;
@@ -65,6 +66,7 @@ const HomePage: FC<{ searchParams: IPaginateQueryProps }> = async ({ searchParam
                     </div>
                 ))}
                 {/* 分页组件 */}
+                {meta.totalPages !> 1 && <PostListPaginate limit={5} page={page}></PostListPaginate>}
             </div>
         </div>
     );
