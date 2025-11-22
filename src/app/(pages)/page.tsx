@@ -20,7 +20,9 @@ const HomePage: FC<{ searchParams: IPaginateQueryProps }> = async ({ searchParam
 
     if (meta.totalPages && meta.totalPages > 0 && page > meta.totalPages) {
         return redirect('/');
-    }
+    } 
+
+    
     return (
         <div className="page-item">
             <Tools className="page-container" />
