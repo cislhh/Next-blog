@@ -1,1 +1,0 @@
-import { faker } from '@/libs/db/utils';

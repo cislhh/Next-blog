@@ -12,7 +12,7 @@ import { Calendar } from 'lucide-react';
 import { PostListPaginate } from '../_components/post/paginate';
 
 const HomePage: FC<{ searchParams: IPaginateQueryProps }> = async ({ searchParams }) => {
-    const { page: currentPage, limit = 8 } = searchParams;
+    const { page: currentPage, limit = 8 } =await searchParams;
 
     const page = isNil(currentPage) || Number(currentPage) < 1 ? 1 : Number(currentPage);
 

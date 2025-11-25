@@ -3,7 +3,7 @@ import type { PaginationResult } from 'prisma-paginate';
 import { base, en, Faker, zh_CN } from '@faker-js/faker';
 import { omit } from 'lodash';
 
-import type { PaginateReturn } from './types.ts';
+import type { PaginateReturn } from './types';
 /**
  * 创建faker实例
  */

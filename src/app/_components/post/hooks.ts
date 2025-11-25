@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 
-import type { IPost } from '@/database/types';
+import type { Post } from '~/node_modules/.prisma/client';
 
 import { createPostItem, updatePostItem } from '@/app/actions/post';
 
@@ -18,7 +18,7 @@ import type { PostCreateData, PostFormData, PostUpdateData } from './types';
  * 目前仅传入默认数据参数到useForm,后续我们会增加一些zod验证等其它参数
  * @param params
  */
-export const usePostActionForm = (params: { type: 'create' } | { type: 'update'; item: IPost }) => {
+export const usePostActionForm = (params: { type: 'create' } | { type: 'update'; item: Post }) => {
     // 定义默认数据
     const defaultValues = useMemo(() => {
         if (params.type === 'create') {
@@ -49,7 +49,7 @@ export const usePostFormSubmitHandler = (
     const router = useRouter();
     return useCallback(
         async (data: PostFormData) => {
-            let post: IPost | null;
+            let post: Post | null;
             for (const key of Object.keys(data) as Array<keyof PostFormData>) {
                 const value = data[key];
 
