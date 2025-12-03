@@ -10,6 +10,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Calendar } from 'lucide-react';
 import { PostListPaginate } from '../_components/post/paginate';
+import { formatChineseTime } from '@/libs/time';
 
 const HomePage: FC<{ searchParams: IPaginateQueryProps }> = async ({ searchParams }) => {
     const { page: currentPage, limit = 8 } =await searchParams;
@@ -60,7 +61,13 @@ const HomePage: FC<{ searchParams: IPaginateQueryProps }> = async ({ searchParam
                                     <span>
                                         <Calendar />
                                     </span>
-                                    <time className="ellips">2024年8月10日</time>
+                                    <time className="ellips">
+                                        {
+                                            !isNil(item.updatedAt)
+                                            ? formatChineseTime(item.updatedAt)
+                                            : formatChineseTime(item.createdAt)
+                                        }
+                                    </time>
                                 </div>
                                 {/* 文章操作按钮 */}
                             </div>
