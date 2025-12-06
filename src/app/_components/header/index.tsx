@@ -1,14 +1,28 @@
+'use client';
 import type { FC } from 'react';
 
-import { ShadcnThemeSetting } from '../theme/setting';
-import { HeaderLogo } from './logo';
-import $styles from './styles.module.css';
+import useScroll from '@/libs/broswer';
 
-export const Header: FC = () => (
-    <header className={$styles.header}>
-        <HeaderLogo />
-        <div className="mt-5">
-            <ShadcnThemeSetting />
-        </div>
-    </header>
-);
+import { cn } from '../shadcn/utils';
+import { HeaderLogo } from './logo';
+import { HeaderNav } from './nav';
+import $styles from './styles.module.css';
+import { HeaderTools } from './tools';
+export const Header: FC = () => {
+    const scrolled = useScroll(50);
+
+    return (
+        <header
+            className={cn($styles.header, 'page-item', {
+                [$styles['header-scrolled']]: scrolled,
+                [$styles['header-unscrolled']]: !scrolled,
+            })}
+        >
+            <div className={cn('page-container', $styles.container)}>
+                <HeaderLogo />
+                <HeaderNav />
+                <HeaderTools />
+            </div>
+        </header>
+    );
+};

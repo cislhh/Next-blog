@@ -1,0 +1,25 @@
+@reference "#tailwind.css";
+
+.nav {
+    @apply flex flex-auto items-center ml-10;
+}
+
+.nav > .menus {
+    @apply hidden md:flex md:flex-auto md:max-w-full md:!justify-start;
+}
+
+.nav > .menus .menu-item > a {
+    @apply bg-transparent hover:bg-transparent duration-200 inline-flex py-0 text-base;
+
+    &:hover {
+        @apply font-bold;
+    }
+}
+
+.nav > .menus .menu-item:first-child > a {
+    @apply pl-0;
+}
+
+.nav > .menus > a {
+    @apply text-gray-700 hover:text-gray-900;
+}
