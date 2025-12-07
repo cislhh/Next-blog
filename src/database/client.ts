@@ -1,11 +1,16 @@
-import { PrismaClient } from '../../node_modules/.prisma/client';
+import { PrismaPg } from '@prisma/adapter-pg';
+
+// import { PrismaClient } from '../../node_modules/.prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { truncateExt } from './extensions/truncate';
 
-const baseClient = new PrismaClient()
+const connectionString = `${process.env.DATABASE_URL}`;
 
-const prisma = baseClient.$extends(
-    truncateExt('sqlite', {
-        resetSequence: false,
+const adapter = new PrismaPg({ connectionString });
+
+const prisma = new PrismaClient({ adapter }).$extends(
+    truncateExt('postgres', {
+        // resetSequence: false,
     }),
 );
 
