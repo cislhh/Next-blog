@@ -35,7 +35,7 @@ export const usePostActionForm = (params: { type: 'create' } | { type: 'update';
             summary: isNil(params.item.summary) ? '' : params.item.summary,
         } as DeepNonNullable<PostUpdateData>;
     }, [params.type]);
-    return useForm<DeepNonNullable<PostFormData>>({
+    return useForm<PostFormData>({
         defaultValues,
     });
 };
