@@ -7,7 +7,7 @@ import { useCallback, useRef, useState } from 'react';
 
 import type { PostCreateFormRef } from '@/app/_components/post/types';
 
-import { BackButton } from '@/app/_components/home/back-button';
+// import { BackButton } from '@/app/_components/home/back-button';
 import { PostActionForm } from '@/app/_components/post/action-form';
 import { Button } from '@/app/_components/shadcn/ui/button';
 
@@ -26,7 +26,7 @@ export const PostCreateForm: FC = () => {
     return (
         <>
             <div className={$styles.actions}>
-                <BackButton />
+                {/* <BackButton /> */}
                 <Button onClick={createPost} disabled={pedding}>
                     {pedding ? '保存中...' : '保存'}
                     <Save />

@@ -59,7 +59,7 @@
             }
 
             & > .footer {
-                @apply py-3 flex justify-between text-muted-foreground;
+                @apply py-3 flex justify-between text-muted-foreground flex-wrap space-y-3 md:space-y-0;
 
                 & > .meta {
                     @apply flex items-center;

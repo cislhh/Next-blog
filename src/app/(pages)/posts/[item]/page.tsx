@@ -5,7 +5,6 @@ import { Calendar } from 'lucide-react';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
-import { Tools } from '@/app/_components/home/tools';
 import { cn } from '@/app/_components/shadcn/utils';
 import { queryPostItem } from '@/app/actions/post';
 
@@ -18,7 +17,6 @@ const PostItemPage: FC<{ params: Promise<{ item: string }> }> = async ({ params 
     if (isNil(post)) return notFound();
     return (
         <div className="page-item">
-            <Tools className="page-container" back />
             <div className={cn('page-container', $styles.item)}>
                 <div className={$styles.thumb}>
                     <Image

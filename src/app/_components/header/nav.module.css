@@ -23,3 +23,23 @@
 .nav > .menus > a {
     @apply text-gray-700 hover:text-gray-900;
 }
+
+.mobileNav {
+    @apply flex w-full p-2;
+
+    & > ul {
+        @apply flex w-full;
+
+        & > li {
+            @apply flex w-full items-center h-9 py-1 px-3 mt-2;
+
+            &:first-child {
+                @apply mt-0;
+            }
+
+            & > a {
+                @apply flex items-center w-full h-full;
+            }
+        }
+    }
+}

@@ -3,7 +3,6 @@ import { IPaginateQueryProps } from '../_components/paginate/types';
 import { isNil } from 'lodash';
 import { queryPostPaginate } from '../actions/post';
 import { redirect } from 'next/navigation';
-import { Tools } from '../_components/home/tools';
 import { cn } from '../_components/shadcn/utils';
 import $styles from './page.module.css'
 import Image from 'next/image';
@@ -26,7 +25,6 @@ const HomePage: FC<{ searchParams: IPaginateQueryProps }> = async ({ searchParam
     
     return (
         <div className="page-item">
-            <Tools className="page-container" />
              <div className={cn('page-container', $styles.list)}>
                 {items.map((item) => (
                     <div
