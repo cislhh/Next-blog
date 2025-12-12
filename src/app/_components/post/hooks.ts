@@ -7,11 +7,13 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 
-import type { Post } from '~/node_modules/.prisma/client';
+// import type { Post } from '~/node_modules/.prisma/client';
+import type { Post } from '@prisma/client';
 
 import { createPostItem, updatePostItem } from '@/app/actions/post';
 
 import type { PostCreateData, PostFormData, PostUpdateData } from './types';
+import { getDefaultFormValues } from '@/libs/form';
 
 /**
  * 生成react-form-hooks表单的状态
@@ -21,19 +23,7 @@ import type { PostCreateData, PostFormData, PostUpdateData } from './types';
 export const usePostActionForm = (params: { type: 'create' } | { type: 'update'; item: Post }) => {
     // 定义默认数据
     const defaultValues = useMemo(() => {
-        if (params.type === 'create') {
-            return {
-                title: '文章标题',
-                body: '文章内容',
-                summary: '',
-            } as DeepNonNullable<PostCreateData>;
-        }
-
-        return {
-            title: params.item.title,
-            body: params.item.body,
-            summary: isNil(params.item.summary) ? '' : params.item.summary,
-        } as DeepNonNullable<PostUpdateData>;
+        return getDefaultFormValues<Post,PostFormData>(['title', 'body', 'summary', 'slug', 'keywords', 'description'],params)
     }, [params.type]);
     return useForm<PostFormData>({
         defaultValues,
