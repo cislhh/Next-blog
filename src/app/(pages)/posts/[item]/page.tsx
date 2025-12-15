@@ -10,6 +10,22 @@ import { queryPostItem } from '@/app/actions/post';
 
 import $styles from './page.module.css';
 import { formatChineseTime } from '@/libs/time';
+import type { Metadata, ResolvingMetadata } from 'next';
+
+export const generateMetadata = async (
+    {params}:{params:Promise<{item:string}>},
+    parent:ResolvingMetadata
+):Promise<Metadata>=>{
+    const {item} = await params
+    const res = await queryPostItem(item)
+    if(isNil(res)) return {}
+
+    return {
+        title: `${res.title} - ${(await parent).title?.absolute}`,
+        keywords: res.keywords,
+        description: res.description,
+    }
+}
 
 const PostItemPage: FC<{ params: Promise<{ item: string }> }> = async ({ params }) => {
     const { item } = await params;
