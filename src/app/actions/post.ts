@@ -3,11 +3,12 @@
 
 import { isNil } from 'lodash';
 
-import type { Post } from '~/node_modules/.prisma/client';
+import type { Post } from '@prisma/client';
 import type { PaginateOptions, PaginateReturn } from '@/libs/db/types';
 
 import db from '@/libs/db/client';
 import { paginateTransform } from '@/libs/db/utils';
+
 import { getRandomInt } from '@/libs/random';
 /**
  * 查询分页文章列表信息
@@ -37,12 +38,15 @@ export const queryPostTotalPages = async (limit = 8): Promise<number> => {
  * 根据id或slug查询文章信息
  * @param arg
  */
-export const queryPostItem = async (arg: string): Promise<Post | null> => {
+export const queryPostItem = async(arg :string):Promise<Post | null>=>{
     const item = await db.post.findFirst({
-        where: { id: arg },
-    });
-    return item;
-};
+        where:{
+            OR:[{id:arg},{slug:arg}]
+        }
+    })
+
+    return item
+}
 
 /**
  * 根据ID查询文章信息
@@ -89,3 +93,4 @@ export const deletePostItem = async (id: string): Promise<Post | null> => {
     }
     return null;
 };
+

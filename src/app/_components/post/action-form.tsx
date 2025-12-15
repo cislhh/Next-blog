@@ -1,9 +1,10 @@
 'use client';
 
-import { isNil } from 'lodash';
+import { isNil, trim } from 'lodash';
 import {
     ChangeEventHandler,
     forwardRef,
+    MouseEventHandler,
     useCallback,
     useEffect,
     useImperativeHandle,
@@ -27,6 +28,7 @@ import { Input } from '../shadcn/ui/input';
 import { Textarea } from '../shadcn/ui/textarea';
 import { usePostActionForm, usePostFormSubmitHandler } from './hooks';
 import Link from 'next/link';
+import { generateLowerString } from '@/libs/utils';
 
 export const PostActionForm = forwardRef<PostCreateFormRef, PostActionFormProps>((props, ref) => {
     const form = usePostActionForm(
@@ -42,6 +44,14 @@ export const PostActionForm = forwardRef<PostCreateFormRef, PostActionFormProps>
     const changeSlug: ChangeEventHandler<HTMLInputElement> = useCallback((e) => {
         setSlug(e.target?.value);
     }, []);
+
+    const generateTitleSlug: MouseEventHandler<HTMLAnchorElement> = useCallback((e)=>{
+        e.preventDefault();
+        if(!form.formState.isSubmitting){
+            const title = trim(form.getValues('title'),'');
+            if(title) setSlug(generateLowerString(title))
+        }
+    },[form.formState.isSubmitting])
 
     useEffect(() => {
         if (props.type === 'create' && !isNil(props.setPedding))
@@ -127,6 +137,7 @@ export const PostActionForm = forwardRef<PostCreateFormRef, PostActionFormProps>
                                         <Link
                                             className="ml-5 mr-1 text-black dark:text-white"
                                             href="#"
+                                            onClick={generateTitleSlug}
                                             aria-disabled={form.formState.isSubmitting}
                                         >
                                             [点此]

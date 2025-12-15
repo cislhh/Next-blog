@@ -4,7 +4,7 @@ import { isNil } from 'lodash';
 import { queryPostPaginate } from '../actions/post';
 import { redirect } from 'next/navigation';
 import { cn } from '../_components/shadcn/utils';
-import $styles from './page.module.css'
+import $styles from './page.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Calendar } from 'lucide-react';
@@ -12,7 +12,7 @@ import { PostListPaginate } from '../_components/post/paginate';
 import { formatChineseTime } from '@/libs/time';
 
 const HomePage: FC<{ searchParams: IPaginateQueryProps }> = async ({ searchParams }) => {
-    const { page: currentPage, limit = 8 } =await searchParams;
+    const { page: currentPage, limit = 8 } = await searchParams;
 
     const page = isNil(currentPage) || Number(currentPage) < 1 ? 1 : Number(currentPage);
 
@@ -20,12 +20,11 @@ const HomePage: FC<{ searchParams: IPaginateQueryProps }> = async ({ searchParam
 
     if (meta.totalPages && meta.totalPages > 0 && page > meta.totalPages) {
         return redirect('/');
-    } 
+    }
 
-    
     return (
         <div className="page-item">
-             <div className={cn('page-container', $styles.list)}>
+            <div className={cn('page-container', $styles.list)}>
                 {items.map((item) => (
                     <div
                         className={$styles.item}
@@ -33,7 +32,7 @@ const HomePage: FC<{ searchParams: IPaginateQueryProps }> = async ({ searchParam
                         style={{ '--bg-img': `url(${item.thumb})` } as any}
                         key={item.id}
                     >
-                        <Link className={$styles.thumb} href={`/posts/${item.id}`}>
+                        <Link className={$styles.thumb} href={`/posts/${item.slug || item.id}`}>
                             <Image
                                 src={item.thumb}
                                 alt={item.title}
@@ -45,7 +44,7 @@ const HomePage: FC<{ searchParams: IPaginateQueryProps }> = async ({ searchParam
                         </Link>
                         <div className={$styles.content}>
                             <div className={$styles.title}>
-                                <Link href={`/posts/${item.id}`}>
+                                <Link href={`/posts/${item.slug || item.id}`}>
                                     <h2 className="ellips animate-decoration animate-decoration-lg">
                                         {item.title}
                                     </h2>
@@ -60,11 +59,9 @@ const HomePage: FC<{ searchParams: IPaginateQueryProps }> = async ({ searchParam
                                         <Calendar />
                                     </span>
                                     <time className="ellips">
-                                        {
-                                            !isNil(item.updatedAt)
+                                        {!isNil(item.updatedAt)
                                             ? formatChineseTime(item.updatedAt)
-                                            : formatChineseTime(item.createdAt)
-                                        }
+                                            : formatChineseTime(item.createdAt)}
                                     </time>
                                 </div>
                                 {/* 文章操作按钮 */}
@@ -73,7 +70,9 @@ const HomePage: FC<{ searchParams: IPaginateQueryProps }> = async ({ searchParam
                     </div>
                 ))}
                 {/* 分页组件 */}
-                {meta.totalPages !> 1 && <PostListPaginate limit={5} page={page}></PostListPaginate>}
+                {meta.totalPages! > 1 && (
+                    <PostListPaginate limit={5} page={page}></PostListPaginate>
+                )}
             </div>
         </div>
     );

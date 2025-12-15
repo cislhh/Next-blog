@@ -58,7 +58,7 @@ export const usePostFormSubmitHandler = (
                 }
                 // 创建或更新文章后跳转到文章详情页
                 // 注意,这里不要用push,防止在详情页后退后返回到创建或编辑页面的弹出框
-                if (!isNil(post)) router.replace(`/posts/${post.id}`);
+                if (!isNil(post)) router.replace(`/posts/${post.slug || post.id}`);
             } catch (error) {
                 console.log('error', error);
             }
