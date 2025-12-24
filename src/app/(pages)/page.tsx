@@ -28,8 +28,6 @@ const HomePage: FC<{ searchParams: IPaginateQueryProps }> = async ({ searchParam
                 {items.map((item) => (
                     <div
                         className={$styles.item}
-                        // 传入css变量的封面图用于鼠标移动到此处后会出现不同颜色的光晕效果
-                        style={{ '--bg-img': `url(${item.thumb})` } as any}
                         key={item.id}
                     >
                         <Link className={$styles.thumb} href={`/posts/${item.slug || item.id}`}>

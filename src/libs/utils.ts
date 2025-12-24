@@ -1,5 +1,4 @@
 import deepmerge from 'deepmerge';
-
 import { lowerCase, trim } from 'lodash';
 import pinyin from 'pinyin';
 
@@ -30,11 +29,15 @@ export const deepMerge = <T1, T2>(
  * @param from
  */
 
-export const generateLowerString  = (from: string)=>{
-    const slug = pinyin(from,{
-        style:0,
-        segment:false
-    }).map((words)=>words[0]).join('-');
-    console.log(slug,'data----slug');
-    return lowerCase(slug).split(' ').map((p)=>trim(p,' ')).join('-');
-}
+export const generateLowerString = (from: string) => {
+    const slug = pinyin(from, {
+        style: 0,
+        segment: false,
+    })
+        .map((words) => words[0])
+        .join('-');
+    return lowerCase(slug)
+        .split(' ')
+        .map((p) => trim(p, ' '))
+        .join('-');
+};
