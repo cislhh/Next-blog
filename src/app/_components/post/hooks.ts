@@ -1,19 +1,20 @@
 'use client';
 
-import type { DeepNonNullable } from 'utility-types';
+// import type { Post } from '~/node_modules/.prisma/client';
+import type { Post } from '@prisma/client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
 import { isNil, trim } from 'lodash';
 import { useRouter } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 
-// import type { Post } from '~/node_modules/.prisma/client';
-import type { Post } from '@prisma/client';
-
 import { createPostItem, updatePostItem } from '@/app/actions/post';
+import { getDefaultFormValues } from '@/libs/form';
 
 import type { PostCreateData, PostFormData, PostUpdateData } from './types';
-import { getDefaultFormValues } from '@/libs/form';
+
+import { generatePostFormValidator } from './form-validator';
 
 /**
  * 生成react-form-hooks表单的状态
@@ -23,9 +24,16 @@ import { getDefaultFormValues } from '@/libs/form';
 export const usePostActionForm = (params: { type: 'create' } | { type: 'update'; item: Post }) => {
     // 定义默认数据
     const defaultValues = useMemo(() => {
-        return getDefaultFormValues<Post,PostFormData>(['title', 'body', 'summary', 'slug', 'keywords', 'description'],params)
+        return getDefaultFormValues<Post, PostFormData>(
+            ['title', 'body', 'summary', 'slug', 'keywords', 'description'],
+            params,
+        );
     }, [params.type]);
     return useForm<PostFormData>({
+        mode: 'all',
+        resolver: zodResolver(
+            generatePostFormValidator(params.type === 'update' ? params.item.id : undefined),
+        ),
         defaultValues,
     });
 };
