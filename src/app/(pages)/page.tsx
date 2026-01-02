@@ -1,15 +1,19 @@
 import type { FC } from 'react';
-import { IPaginateQueryProps } from '../_components/paginate/types';
+
 import { isNil } from 'lodash';
-import { queryPostPaginate } from '../actions/post';
-import { redirect } from 'next/navigation';
-import { cn } from '../_components/shadcn/utils';
-import $styles from './page.module.css';
+import { Calendar } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Calendar } from 'lucide-react';
-import { PostListPaginate } from '../_components/post/paginate';
+import { redirect } from 'next/navigation';
+
 import { formatChineseTime } from '@/libs/time';
+
+import type { IPaginateQueryProps } from '../_components/paginate/types';
+
+import { PostListPaginate } from '../_components/post/paginate';
+import { cn } from '../_components/shadcn/utils';
+import { queryPostPaginate } from '../actions/post';
+import $styles from './page.module.css';
 
 const HomePage: FC<{ searchParams: IPaginateQueryProps }> = async ({ searchParams }) => {
     const { page: currentPage, limit = 8 } = await searchParams;
@@ -26,10 +30,7 @@ const HomePage: FC<{ searchParams: IPaginateQueryProps }> = async ({ searchParam
         <div className="page-item">
             <div className={cn('page-container', $styles.list)}>
                 {items.map((item) => (
-                    <div
-                        className={$styles.item}
-                        key={item.id}
-                    >
+                    <div className={$styles.item} key={item.id}>
                         <Link className={$styles.thumb} href={`/posts/${item.slug || item.id}`}>
                             <Image
                                 src={item.thumb}
