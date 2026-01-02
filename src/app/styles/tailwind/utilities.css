@@ -12,7 +12,7 @@
 
 /* 空白页样式,一般用于404和error页面 */
 @utility page-blank {
-    @apply bg-white/80  backdrop-blur-sm h-full w-full drop-shadow-lg rounded-md flex justify-center items-center;
+    @apply bg-white/80  backdrop-blur-sm h-full w-full drop-shadow-lg rounded-md flex justify-center items-center flex-col space-y-3 lg:space-y-0 lg:flex-row;
 
     html.dark & {
         @apply bg-black/50;
